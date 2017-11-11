@@ -1,0 +1,2 @@
+memcached -d -uroot
+

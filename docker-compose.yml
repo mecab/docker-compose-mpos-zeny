@@ -1,0 +1,35 @@
+version: '3'
+services:
+
+  db:
+    restart: always
+    image: mysql:8
+    env_file: .env.production
+    volumes:
+      - ./mysql:/var/lib/mysql
+      - ./mysql-default-encoding.cnf:/etc/mysql/conf.d/default-encoding.cnf
+
+  stratum-mining:
+    restart: always
+    build: stratum-mining
+    image: mecab/stratum-mining
+    env_file: .env.production
+    ports:
+      - "16001:16001"
+    depends_on:
+      - db
+    volumes:
+      - ./stratum-mining/conf/config.py:/work/stratum-mining/conf/config.py
+
+  mpos:
+    restart: always
+    build: mpos
+    image: mecab/mpos
+    env_file: .env.production
+    volumes:
+      - ./mpos/config:/app/include/config
+    depends_on:
+      - stratum-mining
+      - db
+    ports:
+      - "16000:80"

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+mysql -hdb -uroot -p${MYSQL_ROOT_PASSWORD} -D${MYSQL_DATABASE} < /app/sql/000_base_structure.sql && \
+    echo 'Installed MPOS database schema.'
+

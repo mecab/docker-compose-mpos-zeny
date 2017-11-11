@@ -1,11 +1,14 @@
-FROM alpine:3.6
+FROM alpine
 
 MAINTAINER mecab <mecab@misosi.ru>
 
 WORKDIR /work
 
 RUN apk update && \
-    apk add alpine-sdk git curl python python-dev
+    apk add alpine-sdk git curl python python-dev py-pip libffi-dev libressl-dev
+
+# RUN apt-get update && \
+#    apt-get -y install build-essential git curl python python-dev python-pip libffi-dev libssl-dev
 
 RUN git clone https://github.com/ahmedbodi/stratum-mining.git && \
     git clone https://github.com/ahmedbodi/stratum.git && \
@@ -13,15 +16,32 @@ RUN git clone https://github.com/ahmedbodi/stratum-mining.git && \
 
 RUN cd stratum-mining && \
     git submodule init && \
-    git submodule update && \
-    curl https://gist.githubusercontent.com/bitzeny/9db1723161bc2650a1b1/raw/82197337372d4cd2079cd21c948bc6151fa1ca62/stratum.patch | tail +4  > stratum.patch && \
+    git submodule update
+
+RUN cd stratum-mining && \
+    curl https://gist.githubusercontent.com/bitzeny/9db1723161bc2650a1b1/raw/82197337372d4cd2079cd21c948bc6151fa1ca62/stratum.patch | \
+         tail -n +4 | \
+         sed -e "s/zny_yesscrypt/zny_yescrypt/" \
+         > stratum.patch && \
     patch -p1 < stratum.patch
 
-RUN apk add py-pip
-
 RUN cd stratum && \
-    sed -i -e "s/http/https/" distribute_setup.py && \
-    sed -i -e "s/0.6.28/0.7.3/" distribute_setup.py && \
+    sed -i -e "s/use_setuptools()//" setup.py && \
     python setup.py install
 
 RUN cd zny_yescrypt_python && python setup.py install
+
+RUN apk add libmemcached-dev zlib-dev cyrus-sasl-dev mysql-client mysql-dev
+RUN pip install simplejson pylibmc MySQL-python pycrypto
+
+RUN cd stratum-mining && \
+    sed -i -e 's/config = None/raise/' lib/settings.py && \
+    sed -i -e "/^sys\.path =/s/.*/sys.path = [os.path.join(os.getcwd(), 'conf'),os.path.join(os.getcwd(), '.'),os.path.join(os.getcwd(), 'externals', 'stratum-mining-proxy'),] + sys.path/" launcher.tac
+
+RUN apk add memcached
+
+COPY entrypoint /entrypoint
+RUN chmod +x /entrypoint
+
+EXPOSE 19252
+ENTRYPOINT ["/entrypoint"]
