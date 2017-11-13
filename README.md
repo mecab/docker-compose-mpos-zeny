@@ -1,6 +1,8 @@
 Docker Compose for ZNY support enabled MPOS
 ===========================================
 
+**Note!** This docker-compose does **not** include `bitzenyd` (or something coin daemon) container. Please install it by yourself beforehand.
+
 Installation
 ------------
 1. `cp .env.production.sample .env.production`
