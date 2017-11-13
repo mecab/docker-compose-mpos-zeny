@@ -5,7 +5,8 @@ MAINTAINER mecab <mecab@misosi.ru>
 WORKDIR /work
 
 RUN apk update && \
-    apk add alpine-sdk git curl python python-dev py-pip libffi-dev libressl-dev
+    apk add alpine-sdk git curl python python-dev py-pip libffi-dev libressl-dev memcached libmemcached-dev zlib-dev cyrus-sasl-dev mysql-client mysql-dev
+RUN pip install simplejson pylibmc MySQL-python pycrypto
 
 RUN git clone https://github.com/ahmedbodi/stratum-mining.git && \
     git clone https://github.com/ahmedbodi/stratum.git && \
@@ -28,14 +29,9 @@ RUN cd stratum && \
 
 RUN cd zny_yescrypt_python && python setup.py install
 
-RUN apk add libmemcached-dev zlib-dev cyrus-sasl-dev mysql-client mysql-dev
-RUN pip install simplejson pylibmc MySQL-python pycrypto
-
 RUN cd stratum-mining && \
     sed -i -e 's/config = None/raise/' lib/settings.py && \
     sed -i -e "/^sys\.path =/s/.*/sys.path = [os.path.join(os.getcwd(), 'conf'),os.path.join(os.getcwd(), '.'),os.path.join(os.getcwd(), 'externals', 'stratum-mining-proxy'),] + sys.path/" launcher.tac
-
-RUN apk add memcached
 
 COPY entrypoint /entrypoint
 RUN chmod +x /entrypoint

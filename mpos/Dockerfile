@@ -5,7 +5,9 @@ MAINTAINER mecab <mecab@misosi.ru>
 WORKDIR /app
 
 RUN apt-get update && \
-    apt-get -y install git memcached mysql-client php5-memcached php5-mysqlnd php5-curl php5-json
+    apt-get -y install git memcached mysql-client php5-memcached php5-mysqlnd php5-curl php5-json && \
+    apt-get clean && \
+    rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
 
 RUN git clone git://github.com/MPOS/php-mpos.git . && \
     git checkout master;
@@ -22,4 +24,3 @@ COPY ./install-schema /bin
 RUN chmod +x /bin/install-schema
 
 ENV WEB_DOCUMENT_ROOT /app/public
-
