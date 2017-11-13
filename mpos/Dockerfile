@@ -5,7 +5,7 @@ MAINTAINER mecab <mecab@misosi.ru>
 WORKDIR /app
 
 RUN apt-get update && \
-    apt-get -y install git memcached mysql-client php5-memcached php5-mysqlnd php5-curl php5-json && \
+    apt-get install -y --no-install-recommends git memcached mysql-client php5-memcached php5-mysqlnd php5-curl php5-json && \
     apt-get clean && \
     rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
 

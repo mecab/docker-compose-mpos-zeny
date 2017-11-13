@@ -1,4 +1,4 @@
-FROM alpine
+FROM alpine:3.6
 
 MAINTAINER mecab <mecab@misosi.ru>
 
