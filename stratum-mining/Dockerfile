@@ -7,9 +7,6 @@ WORKDIR /work
 RUN apk update && \
     apk add alpine-sdk git curl python python-dev py-pip libffi-dev libressl-dev
 
-# RUN apt-get update && \
-#    apt-get -y install build-essential git curl python python-dev python-pip libffi-dev libssl-dev
-
 RUN git clone https://github.com/ahmedbodi/stratum-mining.git && \
     git clone https://github.com/ahmedbodi/stratum.git && \
     git clone https://github.com/bitzeny/zny_yescrypt_python.git
