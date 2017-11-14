@@ -52,14 +52,14 @@ DEBUG = False
 LOGDIR = 'log/'
 
 # Main application log file.
-LOGFILE = None      # eg. 'stratum.log'
+LOGFILE = 'stratum.log'      # eg. 'stratum.log'
 LOGLEVEL = 'DEBUG'
 # Logging Rotation can be enabled with the following settings
 # It if not enabled here, you can set up logrotate to rotate the files. 
 # For built in log rotation set LOG_ROTATION = True and configure the variables
 LOG_ROTATION = True
 LOG_SIZE = 10485760 # Rotate every 10M
-LOG_RETENTION = 10 # Keep 10 Logs
+LOG_RETENTION = 14 # Keep 14 Logs
 
 # How many threads use for synchronous methods (services).
 # 30 is enough for small installation, for real usage

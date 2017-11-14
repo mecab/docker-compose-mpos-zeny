@@ -20,6 +20,7 @@ services:
       - db
     volumes:
       - ./stratum-mining/conf/config.py:/work/stratum-mining/conf/config.py
+      - ./logs_stratum-mining:/work/stratum-mining/log
 
   mpos:
     restart: always

@@ -1,4 +1,4 @@
 .env.production
 /mysql
 /logs_mpos
-
+/logs_stratum-mining
