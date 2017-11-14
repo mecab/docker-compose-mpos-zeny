@@ -1,5 +1,14 @@
 #!/bin/bash
 
+# Set options to support MySQL 5.7+
+# See:
+#  - https://github.com/MPOS/php-mpos/wiki/FAQ#is-mysql-57-supported
+#  - https://github.com/MPOS/php-mpos/issues/2589
+
+mysql -hdb -uroot -p${MYSQL_ROOT_PASSWORD} << EOD
+set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+EOD
+
 mysql -hdb -uroot -p${MYSQL_ROOT_PASSWORD} -D${MYSQL_DATABASE} < /app/sql/000_base_structure.sql && \
     echo 'Installed MPOS database schema.'
 
