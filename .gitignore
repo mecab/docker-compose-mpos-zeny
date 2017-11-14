@@ -1,2 +1,4 @@
 .env.production
 /mysql
+/logs_mpos
+
