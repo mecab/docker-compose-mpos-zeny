@@ -22,6 +22,19 @@ services:
       - ./stratum-mining/conf/config.py:/work/stratum-mining/conf/config.py
       - ./logs_stratum-mining:/work/stratum-mining/log
 
+  stratum-mining-low-difficulty:
+    restart: always
+    build: stratum-mining
+    image: mecab/stratum-mining
+    env_file: .env.production
+    ports:
+      - "16002:16002"
+    depends_on:
+      - db
+    volumes:
+      - ./stratum-mining/conf/config_low_difficulty.py:/work/stratum-mining/conf/config.py
+      - ./logs_stratum-mining:/work/stratum-mining/log
+
   mpos:
     restart: always
     build: mpos
