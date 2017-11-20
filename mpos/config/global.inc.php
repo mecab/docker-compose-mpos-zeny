@@ -92,7 +92,7 @@ $config['swiftmailer']['smtp']['throttle'] = 100;
  **/
 $config['gettingstarted']['coinname'] = 'Bitzeny';
 $config['gettingstarted']['coinurl'] = 'http://bitzeny.org';
-$config['gettingstarted']['stratumurl'] = getenv('WEB_ALIAS_DOMAIN');
+$config['gettingstarted']['stratumurl'] = getenv('STRATUM_HOSTNAME');
 $config['gettingstarted']['stratumport'] = getenv('STRATUM_SOCKET_PORT');
 
 /**
