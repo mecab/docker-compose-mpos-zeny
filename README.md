@@ -9,7 +9,9 @@ Installation
 2. Edit `.env.production` to make it fits to your environment
 3. Edit `mpos/config/*.inc.php` (especially `mpos/config/global.inc.php`) if needed.
 4. Edit `stratum-mining/conf/config.py` if needed.
-5. `docker-compose build && docker-compose up`
+5. `docker-compose build`
+6. **(only the first time)** `docker-compose run --rm mpos /bin/install-schema`
+7. `docker-compose up`
 
 Donation
 --------
