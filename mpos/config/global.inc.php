@@ -146,14 +146,14 @@ $config['currency'] = 'ZNY';
  *  Target time for coins to be generated
  *   https://github.com/MPOS/php-mpos/wiki/Config-Setup#wiki-coin-target
  **/
-$config['cointarget'] = '150';
+$config['cointarget'] = '90';
 
 /**
  * Coin Diff Change
  *  Amount of blocks between difficulty changes
  *   https://github.com/MPOS/php-mpos/wiki/Config-Setup#wiki-coin-diff-change
  **/
-$config['coindiffchangetarget'] = 2016;
+$config['coindiffchangetarget'] = 1;
 
 /**
  * TX Fees
